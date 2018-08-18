@@ -16,15 +16,10 @@ public class CategoriaService {
 	private CategoriaRepository categoriaRepository;
 	
 	public Categoria find(Integer id) {
-		
 		Optional<Categoria> obj = categoriaRepository.findById(id);
-		if (obj == null) {
-			throw new ObjectNotFoundException("Objeto nao encontrado! Id: " + id 
-		+ ",  Tipo: " + Categoria.class.getName());
-
-		}
-		
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + " , Tipo : "
+		+ Categoria.class.getName()));
 	}
 
 }
