@@ -21,6 +21,7 @@ public class Categoria implements Serializable{
 	private Integer id;
 	private String nome;
 	
+	//@JsonManagedReference
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
@@ -55,6 +56,16 @@ public class Categoria implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
 
 
 	@Override
@@ -65,14 +76,6 @@ public class Categoria implements Serializable{
 		return result;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
-
-
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
 
 	@Override
 	public boolean equals(Object obj) {

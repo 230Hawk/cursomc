@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hawk.mc.domain.Categoria;
 import com.hawk.mc.repositories.CategoriaRepository;
+import com.hawk.mc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -17,6 +18,12 @@ public class CategoriaService {
 	public Categoria find(Integer id) {
 		
 		Optional<Categoria> obj = categoriaRepository.findById(id);
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto nao encontrado! Id: " + id 
+		+ ",  Tipo: " + Categoria.class.getName());
+
+		}
+		
 		return obj.orElse(null);
 	}
 
