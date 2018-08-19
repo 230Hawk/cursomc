@@ -1,5 +1,6 @@
 package com.hawk.mc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.hawk.mc.domain.Categoria;
 import com.hawk.mc.domain.Cidade;
+import com.hawk.mc.domain.Cliente;
+import com.hawk.mc.domain.Endereco;
 import com.hawk.mc.domain.Estado;
 import com.hawk.mc.domain.Produto;
+import com.hawk.mc.domain.enums.TipoCliente;
 import com.hawk.mc.repositories.CategoriaRepository;
 import com.hawk.mc.repositories.CidadeRepository;
+import com.hawk.mc.repositories.ClienteRepository;
+import com.hawk.mc.repositories.EnderecoRepository;
 import com.hawk.mc.repositories.EstadoRepository;
 import com.hawk.mc.repositories.ProdutoRepository;
 
@@ -30,6 +36,12 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -75,6 +87,20 @@ public class CursomcApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
+		Cliente cli1 = new Cliente(null, "MAria Silva", "maria@gmail.com",
+				"23232323232", TipoCliente.PESSOAFISICA );
+		
+		cli1.getTelefones().addAll(Arrays.asList("32331120", "2331010"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303",
+				"Jardim", "74000000", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida MAtos", "105",
+				"Sala 800", "Centro", "74000001", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
 		
 		
