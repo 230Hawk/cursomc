@@ -13,6 +13,7 @@ import com.hawk.mc.domain.Cidade;
 import com.hawk.mc.domain.Cliente;
 import com.hawk.mc.domain.Endereco;
 import com.hawk.mc.domain.Estado;
+import com.hawk.mc.domain.ItemPedido;
 import com.hawk.mc.domain.Pagamento;
 import com.hawk.mc.domain.PagamentoComBoleto;
 import com.hawk.mc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.hawk.mc.repositories.CidadeRepository;
 import com.hawk.mc.repositories.ClienteRepository;
 import com.hawk.mc.repositories.EnderecoRepository;
 import com.hawk.mc.repositories.EstadoRepository;
+import com.hawk.mc.repositories.ItemPedidoRepository;
 import com.hawk.mc.repositories.PagamentoRepository;
 import com.hawk.mc.repositories.PedidoRepository;
 import com.hawk.mc.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -130,5 +135,18 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }
